@@ -24,7 +24,7 @@ export default function CartDrawer() {
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
   const [specialInstructions, setSpecialInstructions] = useState("");
 
-  // Promo code system standard Jumia style
+  // Promo code system standard Apex style
   const [promoCode, setPromoCode] = useState("");
   const [activeCode, setActiveCode] = useState("");
   const [promoError, setPromoError] = useState("");
@@ -33,9 +33,9 @@ export default function CartDrawer() {
   const handleApplyPromo = () => {
     setPromoError("");
     const trimmed = promoCode.trim().toUpperCase();
-    if (trimmed === "JUMIA100K") {
+    if (trimmed === "APEX100K") {
       setDiscountAmount(100000);
-      setActiveCode("JUMIA100K");
+      setActiveCode("APEX100K");
     } else if (trimmed === "APEXWELCOME") {
       setDiscountAmount(50000);
       setActiveCode("APEXWELCOME");
@@ -68,7 +68,7 @@ export default function CartDrawer() {
     e.preventDefault();
     if (cart.length === 0) return;
 
-    // Build invoice payload in professional Jumia formatting
+    // Build invoice payload in professional Apex formatting
     const orderId = `APX-${Math.floor(100000 + Math.random() * 900000)}`;
     const dateStr = new Date().toLocaleDateString("en-US", {
       day: "numeric",
@@ -172,7 +172,7 @@ Hello ${BUSINESS_INFO.name}! 👋 I placed an order via your online store. Pleas
                   <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-slate-400">
                     <ShoppingBag className="w-7 h-7" />
                   </div>
-                  <h5 className="font-display font-bold text-white text-md mb-2">Your Jumia Cart is Empty</h5>
+                  <h5 className="font-display font-bold text-white text-md mb-2">Your Apex Cart is Empty</h5>
                   <p className="text-xs text-slate-400 max-w-xs leading-relaxed mb-6 font-light">
                     Browse our high-end smartphones, Apple Silicon MacBooks, smart TVs and gaming packs to begin building your custom order!
                   </p>
@@ -355,10 +355,10 @@ Hello ${BUSINESS_INFO.name}! 👋 I placed an order via your online store. Pleas
             {/* Bottom calculation widget */}
             {cart.length > 0 && (
               <div className="p-6 bg-white/3 border-t border-white/10 text-left">
-                {/* Jumia Style Coupon Voucher Code section */}
+                {/* Apex Style Coupon Voucher Code section */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] uppercase font-mono tracking-wider text-slate-500">Apply Jumia Voucher code</span>
+                    <span className="text-[10px] uppercase font-mono tracking-wider text-slate-500">Apply Apex Voucher code</span>
                     <span className="text-[9px] font-mono text-blue-400">Try APEXWELCOME or LIRATECH</span>
                   </div>
                   {!activeCode ? (
@@ -448,7 +448,7 @@ Hello ${BUSINESS_INFO.name}! 👋 I placed an order via your online store. Pleas
 
                 <p className="text-[10px] text-slate-500 font-mono text-center mt-3 flex items-center justify-center gap-1.5">
                   <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                  <span>Verified 100% Genuine Jumia Standards</span>
+                  <span>Verified 100% Genuine Apex Standards</span>
                 </p>
               </div>
             )}

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -10,11 +11,47 @@ import WhatsAppFloating from "./components/WhatsAppFloating";
 import CartDrawer from "./components/CartDrawer";
 import WishlistDrawer from "./components/WishlistDrawer";
 import CompareModal from "./components/CompareModal";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider, useCart } from "./context/CartContext";
+
+// Dynamic Meta Management (React Helmet Alternative)
+function SeoHelmet() {
+  const { activeCategory, selectedQuickViewProduct } = useCart();
+
+  useEffect(() => {
+    // Standard Defaults
+    let title = "Nexus Tech Solutions | Premium Electronics, Phones & Laptops in Lira, Uganda";
+    let description = "Discover the ultimate digital hub of Northern Uganda at Nexus Tech Solutions. Shop authenticated smartphones, high-spec laptops, and premium accessories with doorstep delivery and official warranties.";
+
+    if (selectedQuickViewProduct) {
+      // Dynamic title & meta description matching current product in view
+      title = `${selectedQuickViewProduct.name} - Official Price & Specs | Nexus Tech Solutions`;
+      description = `Buy the authentic ${selectedQuickViewProduct.name} at Nexus Tech Solutions Lira. Features: ${selectedQuickViewProduct.description || "Premium certified electronic hardware"}. Rated ${selectedQuickViewProduct.rating || "5.0"}/5 stars. Secure UGX ${selectedQuickViewProduct.price ? selectedQuickViewProduct.price.toLocaleString() : "best"} deal today via WhatsApp delivery.`;
+    } else if (activeCategory && activeCategory !== "All") {
+      // Dynamic title & meta description matching electronic category selection
+      title = `Premium ${activeCategory} for Sale - Lira, Northern Uganda | Nexus Tech Solutions`;
+      description = `Explore the best selection of ${activeCategory} in Lira and Northern Uganda. Authentic stock featuring top brands with official corporate warranties and speedy doorstep transport setups.`;
+    }
+
+    // Dynamic Title Execution
+    document.title = title;
+
+    // Dynamic Meta Description Execution
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute("content", description);
+  }, [activeCategory, selectedQuickViewProduct]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <CartProvider>
+      <SeoHelmet />
       <div className="relative min-h-screen font-sans bg-[#020205] text-[#f3f4f6] antialiased overflow-x-hidden">
         {/* Dynamic Navigation Header */}
         <Header />
@@ -42,7 +79,7 @@ export default function App() {
         {/* Structured sitemaps and copyrights Footer */}
         <Footer />
 
-        {/* Jumia checkout drawer dynamic modal */}
+        {/* Apex checkout drawer dynamic modal */}
         <CartDrawer />
 
         {/* Wishlist Sidebar Overlay */}

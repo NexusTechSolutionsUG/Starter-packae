@@ -53,10 +53,14 @@ export default function Services() {
     compareList,
     toggleCompare,
     isInCompare,
-    setIsCompareOpen
+    setIsCompareOpen,
+    activeCategory,
+    setActiveCategory,
+    selectedQuickViewProduct,
+    setSelectedQuickViewProduct
   } = useCart();
 
-  // Jumia Midnight Flash Sale Countdown state
+  // Apex Midnight Flash Sale Countdown state
   const [countdown, setCountdown] = useState({ hours: 3, minutes: 48, seconds: 15 });
 
   useEffect(() => {
@@ -76,10 +80,7 @@ export default function Services() {
     return () => clearInterval(interval);
   }, []);
 
-  // Jumia Core Interactive Quick View Selection state
-  const [selectedQuickViewProduct, setSelectedQuickViewProduct] = useState<any | null>(null);
-
-  // Simulating real-time Jumia API cache loading states during data initialization
+  // Simulating real-time Apex API cache loading states during data initialization
   const [isCatalogLoading, setIsCatalogLoading] = useState(true);
   const [isCalculatorLoading, setIsCalculatorLoading] = useState(true);
 
@@ -154,7 +155,7 @@ export default function Services() {
       },
       {
         angleName: "Authenticated Sealed Pack",
-        description: "Jumia corporate Lira warehouse shrink-wrap",
+        description: "Apex corporate Lira warehouse shrink-wrap",
         badge: "RETAIL BOX",
         component: (
           <div className="relative flex flex-col items-center justify-center h-full w-full">
@@ -176,7 +177,6 @@ export default function Services() {
 
   // Catalog Engine States
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("featured");
 
   // Dynamic maximum product price selection limit
@@ -271,7 +271,7 @@ export default function Services() {
 
     const totalStr = formatCurrency(getBundleTotal());
 
-    const message = `Hello ${BUSINESS_INFO.name}! 👋 I would like to order a Custom Jumia Setup Package:
+    const message = `Hello ${BUSINESS_INFO.name}! 👋 I would like to order a Custom Apex Setup Package:
     
 📦 *Product Stream:* ${matchedService.title}
 ⚡ *Upgrades added:*
@@ -294,17 +294,17 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-[10px] uppercase font-mono tracking-widest bg-blue-500/10 text-blue-400 font-extrabold px-3 py-1 rounded border border-blue-500/20 mb-3.5 inline-block animate-pulse">
-            🧡 Jumia Marketplace Authorized Outlet
+            🧡 Apex Marketplace Authorized Outlet
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mb-4 text-center">
             Shop Genuine Electronics Online
           </h2>
           <p className="text-slate-400 font-light leading-relaxed text-center font-sans">
-            Enjoy premium certified Jumia e-commerce experiences right here in Lira. Search brand-sealed smartphones, powerful Apple MacBooks, smart screens, and accessories. Express same-day home dispatch on WhatsApp!
+            Enjoy premium certified Apex e-commerce experiences right here in Lira. Search brand-sealed smartphones, powerful Apple MacBooks, smart screens, and accessories. Express same-day home dispatch on WhatsApp!
           </p>
         </div>
 
-        {/* Jumia Brand Flash Deals Countdown Banner */}
+        {/* Apex Brand Flash Deals Countdown Banner */}
         <div className="mb-12 bg-gradient-to-r from-amber-600/20 via-orange-600/15 to-purple-600/10 border border-orange-500/20 rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md relative overflow-hidden">
           {/* Glowing backdrop decorator */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
@@ -791,7 +791,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
                     </span>
                   </div>
                   <h4 className="text-2xl sm:text-4xl font-display font-medium text-white mb-6 leading-tight">
-                    Configure Jumia Office or Living Room Bundles
+                    Configure Apex Office or Living Room Bundles
                   </h4>
                   
                   {/* Selector 1 */}
@@ -821,7 +821,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
                   {/* Selection 2: Custom Addons/Upgrades */}
                   <div>
                     <label className="block text-[10px] uppercase font-mono tracking-wider text-slate-400 mb-2.5 font-bold">
-                      2. Add Protective Equipment & Jumia Store Services:
+                      2. Add Protective Equipment & Apex Store Services:
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       
@@ -918,7 +918,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
                       </div>
 
                       <div className="border-t border-white/5 pt-3">
-                        <span className="text-slate-500 block text-[9px] mb-2 uppercase tracking-tight text-left">Selected Jumia Extras:</span>
+                        <span className="text-slate-500 block text-[9px] mb-2 uppercase tracking-tight text-left">Selected Apex Extras:</span>
                         <ul className="space-y-1.5 pl-2 text-slate-300 font-mono text-left">
                           {addonWarranty && (
                             <li className="flex justify-between text-slate-300">
@@ -945,7 +945,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
                             </li>
                           )}
                           {!addonWarranty && !addonDelivery && !addonProtection && !addonSoftware && (
-                            <li className="text-slate-500 italic text-[11px]">- Toggle services cards left to build a Jumia hardware protection pack</li>
+                            <li className="text-slate-500 italic text-[11px]">- Toggle services cards left to build an Apex hardware protection pack</li>
                           )}
                         </ul>
                       </div>
@@ -984,7 +984,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
 
       </div>
 
-      {/* Jumia Style - Interactive Product Quick View Modal */}
+      {/* Apex Style - Interactive Product Quick View Modal */}
       {selectedQuickViewProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop */}
@@ -1006,7 +1006,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
               <span className="text-[10px] font-mono tracking-widest uppercase bg-blue-500/10 text-blue-400 font-extrabold px-2 py-0.5 rounded border border-blue-500/20">
                 {selectedQuickViewProduct.category}
               </span>
-              <span className="text-[10px] font-mono text-emerald-400 font-semibold">• Jumia Genuine Outlet</span>
+              <span className="text-[10px] font-mono text-emerald-400 font-semibold">• Apex Genuine Outlet</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
@@ -1186,7 +1186,7 @@ Please check stock eligibility at the Lira showroom so can prepare dispatch!`;
                 className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 active:scale-95 flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="text-xs">Add Selection To Jumia Cart</span>
+                <span className="text-xs">Add Selection To Apex Cart</span>
               </button>
               <button
                 type="button"

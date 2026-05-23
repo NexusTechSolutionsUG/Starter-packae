@@ -26,11 +26,21 @@ interface CartContextType {
   clearCompare: () => void;
   isCompareOpen: boolean;
   setIsCompareOpen: (open: boolean) => void;
+
+  // SEO & Head Metadata States
+  activeCategory: string;
+  setActiveCategory: (category: string) => void;
+  selectedQuickViewProduct: any | null;
+  setSelectedQuickViewProduct: (product: any | null) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  // SEO state
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [selectedQuickViewProduct, setSelectedQuickViewProduct] = useState<any | null>(null);
+
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem("apex_cart");
@@ -133,7 +143,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       return [...prevCart, { product, quantity, selectedColor, selectedStorage }];
     });
-    setIsCartOpen(true); // Auto flash draft drawer when items are added like Jumia!
+    setIsCartOpen(true); // Auto flash draft drawer when items are added like Apex!
   };
 
   const updateQty = (
@@ -206,6 +216,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCompare,
         isCompareOpen,
         setIsCompareOpen,
+        activeCategory,
+        setActiveCategory,
+        selectedQuickViewProduct,
+        setSelectedQuickViewProduct,
       }}
     >
       {selectedHtmlIdFix(children)}

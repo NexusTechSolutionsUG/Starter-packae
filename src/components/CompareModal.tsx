@@ -129,7 +129,7 @@ export default function CompareModal() {
                     {/* Price and Badging */}
                     <div className="space-y-2 border-t border-b border-white/5 py-3 mb-4">
                       <div className="flex justify-between items-baseline">
-                        <span className="text-slate-400 font-sans text-xs">Jumia Lira Price:</span>
+                        <span className="text-slate-400 font-sans text-xs">Apex Lira Price:</span>
                         <div className="text-right">
                           <span className={`font-mono text-base font-bold ${p1Cheaper ? "text-emerald-400" : "text-orange-400"}`}>
                             {formatCurrency(item1.price)}
@@ -211,7 +211,7 @@ export default function CompareModal() {
                       {/* Price and Badging */}
                       <div className="space-y-2 border-t border-b border-white/5 py-3 mb-4">
                         <div className="flex justify-between items-baseline">
-                          <span className="text-slate-400 font-sans text-xs">Jumia Lira Price:</span>
+                          <span className="text-slate-400 font-sans text-xs">Apex Lira Price:</span>
                           <div className="text-right">
                             <span className={`font-mono text-base font-bold ${p2Cheaper ? "text-emerald-400" : "text-orange-400"}`}>
                               {formatCurrency(item2.price)}
