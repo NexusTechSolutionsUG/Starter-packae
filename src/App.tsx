@@ -7,39 +7,55 @@ import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import WhatsAppFloating from "./components/WhatsAppFloating";
+import CartDrawer from "./components/CartDrawer";
+import WishlistDrawer from "./components/WishlistDrawer";
+import CompareModal from "./components/CompareModal";
+import { CartProvider } from "./context/CartContext";
 
 export default function App() {
   return (
-    <div className="relative min-h-screen font-sans bg-[#020205] text-[#f3f4f6] antialiased overflow-x-hidden">
-      {/* Dynamic Navigation Header */}
-      <Header />
+    <CartProvider>
+      <div className="relative min-h-screen font-sans bg-[#020205] text-[#f3f4f6] antialiased overflow-x-hidden">
+        {/* Dynamic Navigation Header */}
+        <Header />
 
-      <main className="relative">
-        {/* Hero Section & Metrics */}
-        <Hero />
+        <main className="relative">
+          {/* Hero Section & Metrics */}
+          <Hero />
 
-        {/* Services Showcase & Interactive Calculator */}
-        <Services />
+          {/* Services Showcase & Interactive Calculator */}
+          <Services />
 
-        {/* Why Choose Us Trust Indicators Grid */}
-        <WhyChooseUs />
+          {/* Why Choose Us Trust Indicators Grid */}
+          <WhyChooseUs />
 
-        {/* About Us Company Overview & Mission Statements */}
-        <About />
+          {/* About Us Company Overview & Mission Statements */}
+          <About />
 
-        {/* Testimonials Review Cards */}
-        <Testimonials />
+          {/* Testimonials Review Cards */}
+          <Testimonials />
 
-        {/* Contact Info & compilable WhatsApp Planner Form & Maps Embed */}
-        <Contact />
-      </main>
+          {/* Contact Info & compilable WhatsApp Planner Form & Maps Embed */}
+          <Contact />
+        </main>
 
-      {/* Structured sitemaps and copyrights Footer */}
-      <Footer />
+        {/* Structured sitemaps and copyrights Footer */}
+        <Footer />
 
-      {/* Pulsing floating WhatsApp floating trigger */}
-      <WhatsAppFloating />
-    </div>
+        {/* Jumia checkout drawer dynamic modal */}
+        <CartDrawer />
+
+        {/* Wishlist Sidebar Overlay */}
+        <WishlistDrawer />
+
+        {/* Compare specs side-by-side Modal */}
+        <CompareModal />
+
+        {/* Pulsing floating WhatsApp floating trigger */}
+        <WhatsAppFloating />
+      </div>
+    </CartProvider>
   );
 }
+
 

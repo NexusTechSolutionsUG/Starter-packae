@@ -5,8 +5,8 @@ import { MessageSquare, Phone, Mail, MapPin, Send, MessageCircle } from "lucide-
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
-    businessName: "",
-    serviceNeeded: SERVICES[0].title,
+    deliveryArea: "",
+    selectedItem: SERVICES[0].title,
     message: "",
   });
 
@@ -24,12 +24,12 @@ export default function Contact() {
     // Format message text for WhatsApp API
     const textMessage = `Hello ${BUSINESS_INFO.name}! 👋
     
-My name is *${formData.name}* ${formData.businessName ? `from *${formData.businessName}*` : ""}.
+My name is *${formData.name}* ${formData.deliveryArea ? `located at *${formData.deliveryArea}*` : ""}.
 
-I am interested in: *${formData.serviceNeeded}*
-Message: "${formData.message}"
+I am looking to buy/reserve: *${formData.selectedItem}*
+Inquiry Details: "${formData.message}"
 
-Please get back to me to discuss options!`;
+Please let me know if this is currently in stock at the showroom so we can finalize delivery!`;
 
     // Wait a brief simulated moment to make it look professional
     setTimeout(() => {
@@ -47,7 +47,7 @@ Please get back to me to discuss options!`;
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+    <section id="contact" className="py-24 relative overflow-hidden text-left">
       {/* Decorative center halo for contact */}
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[130px] -z-10 animate-pulse duration-5000" />
 
@@ -59,10 +59,10 @@ Please get back to me to discuss options!`;
             Contact {BUSINESS_INFO.name}
           </h2>
           <h3 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mb-4">
-            Let's Accelerate Your Success
+            Reserve Your Next Premium Device
           </h3>
           <p className="text-slate-400 font-light leading-relaxed">
-            Fill out our active dynamic WhatsApp planner or reach out directly to check availability for physical boardroom brainstorming sessions.
+            Fill out our active showroom stock inquiry form or reach out directly to chat with our Lira-based sales representative.
           </p>
         </div>
 
@@ -75,20 +75,20 @@ Please get back to me to discuss options!`;
             <div className="space-y-6">
               <h4 className="font-display font-bold text-xl text-white">Direct Connect Info</h4>
               <p className="text-sm text-slate-400 font-light leading-relaxed">
-                Connect directly with our local engineering consultants. We typically answer within 15 minutes during standard Kampala business hours.
+                Connect directly with our local retail consultants. We typically answer within 15 minutes during standard Lira business hours.
               </p>
 
               <div className="space-y-4">
                 {/* Channel 1: WhatsApp Helpline */}
                 <button
-                  onClick={handleFormSubmit}
+                  onClick={handlePhoneCall}
                   className="w-full bg-white/4 border border-white/8 hover:border-white/15 hover:bg-white/10 p-4 rounded-xl flex items-center gap-4 transition-all text-left group cursor-pointer"
                 >
                   <div className="w-10 h-10 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Chat with Engineers</span>
+                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Chat with Sales Rep</span>
                     <span className="text-sm font-semibold text-white font-mono">{BUSINESS_INFO.whatsappDisplay}</span>
                   </div>
                 </button>
@@ -102,7 +102,7 @@ Please get back to me to discuss options!`;
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Call Helpline</span>
+                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Sales Hotline</span>
                     <span className="text-sm font-semibold text-white font-mono">{BUSINESS_INFO.phoneDisplay}</span>
                   </div>
                 </button>
@@ -116,18 +116,18 @@ Please get back to me to discuss options!`;
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Main Digital Inbox</span>
+                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Showroom Digital Mailbox</span>
                     <span className="text-sm font-semibold text-white font-mono">{BUSINESS_INFO.email}</span>
                   </div>
                 </button>
 
-                {/* Channel 4: Kampala HQ physical address */}
+                {/* Channel 4: Lira HQ physical address */}
                 <div className="bg-white/4 border border-white/8 p-4 rounded-xl flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-500 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Our Kampala Boardroom</span>
+                    <span className="text-[10px] uppercase font-mono text-slate-500 block tracking-tight">Lira Showroom Lounge</span>
                     <span className="text-xs text-white leading-relaxed">{BUSINESS_INFO.address}</span>
                   </div>
                 </div>
@@ -136,9 +136,9 @@ Please get back to me to discuss options!`;
 
             {/* Support working hours message */}
             <div className="bg-white/3 border border-white/5 p-4 rounded-xl">
-              <span className="text-[10px] font-mono font-bold text-blue-400 block uppercase mb-1">Live Response Guarantee</span>
+              <span className="text-[10px] font-mono font-bold text-blue-400 block uppercase mb-1">Stock Dispatch Hours</span>
               <p className="text-[11px] text-slate-400 font-light leading-relaxed">
-                Active service support is available Mondays through Saturdays from 08:00 AM to 06:00 PM East African Time. Rapid response deployment is active for mission-critical client servers.
+                Active showroom sales are open Mondays through Saturdays from 08:30 AM to 06:30 PM East African Time. Fast doorstep delivery dispatch operates until 05:30 PM daily.
               </p>
             </div>
 
@@ -149,14 +149,14 @@ Please get back to me to discuss options!`;
             
             <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-mono mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              Pre-filled Messaging Auto-compiler
+              Dynamic Showroom Catalog Request
             </span>
 
             <h4 className="font-display font-bold text-white text-lg mb-4">
-              Launch Your Web Planner Request
+              Instant In-Stock Verification
             </h4>
             <p className="text-xs text-slate-400 font-light leading-relaxed mb-6">
-              Select your service segment and submit the card. The planner converts your answers into an organized, instant chat message template so we can start planning immediately.
+              Select your desired flagship item and type your questions. Clicking submits and pre-compiles your order into a formatted chat template to verify with our live inventory managers immediately.
             </p>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -176,47 +176,47 @@ Please get back to me to discuss options!`;
                   />
                 </div>
 
-                {/* Field: Business Title */}
+                {/* Field: Delivery Area */}
                 <div>
-                  <label htmlFor="businessName" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Business Name (Optional)</label>
+                  <label htmlFor="deliveryArea" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Delivery Zone / Town</label>
                   <input
                     type="text"
-                    id="businessName"
-                    name="businessName"
-                    placeholder="e.g. Victoria Safaris"
-                    value={formData.businessName}
+                    id="deliveryArea"
+                    name="deliveryArea"
+                    placeholder="e.g. Lira Town, Plot 2 Road"
+                    value={formData.deliveryArea}
                     onChange={handleInputChange}
                     className="w-full bg-black/40 border border-white/10 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 text-xs rounded-xl p-3.5 text-white transition-all outline-none"
                   />
                 </div>
               </div>
 
-              {/* Field: Service selector */}
+              {/* Field: Item selector */}
               <div>
-                <label htmlFor="serviceNeeded" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Platform Chosen *</label>
+                <label htmlFor="selectedItem" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Flagship Gadget Group *</label>
                 <select
-                  id="serviceNeeded"
-                  name="serviceNeeded"
-                  value={formData.serviceNeeded}
+                  id="selectedItem"
+                  name="selectedItem"
+                  value={formData.selectedItem}
                   onChange={handleInputChange}
                   className="w-full bg-black/40 border border-white/10 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 text-xs rounded-xl p-3.5 text-white transition-all outline-none cursor-pointer"
                 >
                   {SERVICES.map((s, i) => (
                     <option key={i} value={s.title}>{s.title} ({s.priceStart})</option>
                   ))}
-                  <option value="Multi-platform full spec system">Enterprise Custom Integration</option>
+                  <option value="Custom multi gadget bulk set">Other Accessory / Custom Bulk Order</option>
                 </select>
               </div>
 
               {/* Field: Message */}
               <div>
-                <label htmlFor="message" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Message Details *</label>
+                <label htmlFor="message" className="block text-[10px] font-mono uppercase text-slate-400 mb-1.5 font-bold">Inquiry Details *</label>
                 <textarea
                   id="message"
                   name="message"
                   required
                   rows={4}
-                  placeholder="Tell us about your business goals and current timelines..."
+                  placeholder="Specify model, preferred storage/color (e.g. iPhone 15 Pro Max 256GB Natural Titanium)..."
                   value={formData.message}
                   onChange={handleInputChange}
                   className="w-full bg-black/40 border border-white/10 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 text-xs rounded-xl p-3.5 text-white transition-all resize-none outline-none"
@@ -234,7 +234,7 @@ Please get back to me to discuss options!`;
                 ) : (
                   <>
                     <MessageCircle className="w-4 h-4 text-emerald-100" />
-                    <span>Compile & Launch on WhatsApp</span>
+                    <span>Inquire via WhatsApp Catalog</span>
                     <Send className="w-3.5 h-3.5 text-green-200 group-hover:translate-x-0.5 transition-transform" />
                   </>
                 )}
@@ -248,8 +248,8 @@ Please get back to me to discuss options!`;
         {/* Clean responsive Google Map iFrame card */}
         <div id="office-map-component" className="w-full h-80 bg-white/3 border border-white/10 rounded-[2.5rem] overflow-hidden p-2 shadow-2xl">
           <iframe
-            title={`${BUSINESS_INFO.name} office location - Acacia Avenue, Kampala`}
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15959.028786016148!2d32.583120689405625!3d0.33413551532847056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb0e01861cbd%3A0x67dbb69c6fc96c21!2sKololo%2C%20Kampala!5e0!3m2!1sen!2sug!4v1700000000000!5m2!1sen!2sug"
+            title={`${BUSINESS_INFO.name} office location - Juba Road, Lira`}
+            src={BUSINESS_INFO.googleMapsEmbed}
             className="w-full h-full rounded-2xl border-0 grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition-all duration-500"
             allowFullScreen={false}
             loading="lazy"

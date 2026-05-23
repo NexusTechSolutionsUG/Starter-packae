@@ -27,3 +27,28 @@ export interface TechStackItem {
   name: string;
   category: string;
 }
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  category: string;
+  rating: number;
+  reviewsCount: number;
+  badge?: string;
+  specs: string[];
+  colors?: string[];
+  storages?: string[];
+  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
+  iconName: "Smartphone" | "Laptop" | "Tv" | "Gamepad2" | "Watch" | "Headphones" | "Camera" | "Speaker";
+}
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+  selectedColor?: string;
+  selectedStorage?: string;
+}
+

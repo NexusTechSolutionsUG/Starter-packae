@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Smartphone } from "lucide-react";
 import { BUSINESS_INFO } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -29,7 +29,7 @@ export default function WhatsAppFloating() {
   }, []);
 
   const handleFloatingClick = () => {
-    const defaultMsg = encodeURIComponent(`Hello ${BUSINESS_INFO.name}! 👋 Checked your landing website. I would like to get quick feedback on how to launch a digital project.`);
+    const defaultMsg = encodeURIComponent(`Hello ${BUSINESS_INFO.name}! 👋 Checked your online storefront. I would like to inquire about gadget specs, prices, and showroom stock availability!`);
     window.open(`https://wa.me/${BUSINESS_INFO.whatsappNumber}?text=${defaultMsg}`, "_blank");
   };
 
@@ -50,7 +50,7 @@ export default function WhatsAppFloating() {
               >
                 {/* Ping active */}
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shrink-0" />
-                <span>Chat live with an engineer</span>
+                <span>Chat live with showroom staff</span>
                 {/* Close button for tooltip */}
                 <button
                   onClick={() => setShowTooltip(false)}
