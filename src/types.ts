@@ -43,6 +43,11 @@ export interface Product {
   storages?: string[];
   stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
   iconName: "Smartphone" | "Laptop" | "Tv" | "Gamepad2" | "Watch" | "Headphones" | "Camera" | "Speaker";
+  // Media & Scalable spec additions
+  images?: string[];
+  videos?: string[];
+  videoPreview?: string;
+  detailedSpecs?: { label: string; value: string }[];
 }
 
 export interface CartItem {

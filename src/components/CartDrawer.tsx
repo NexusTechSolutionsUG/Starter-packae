@@ -30,6 +30,124 @@ export default function CartDrawer() {
   const [promoError, setPromoError] = useState("");
   const [discountAmount, setDiscountAmount] = useState(0);
 
+  // Scalable SVG Bar + Area Chart representing cart item pricing
+  const renderCartChart = () => {
+    if (cart.length === 0) return null;
+    
+    // Max item cost for scaling bar heights (minimum scale at 1 to prevent division by zero)
+    const maxVal = Math.max(...cart.map(item => item.product.price * item.quantity), 1);
+    
+    // Chart specifications
+    const chartHeight = 80;
+    const paddingX = 20;
+    const paddingY = 10;
+    const width = 360; // Standard layout bounds
+    
+    // Compute points for the line/area connector
+    const points = cart.map((item, idx) => {
+      const x = paddingX + (idx / Math.max(cart.length - 1, 1)) * (width - paddingX * 2);
+      const ratio = (item.product.price * item.quantity) / maxVal;
+      const y = chartHeight - paddingY - ratio * (chartHeight - paddingY * 2);
+      return { x, y, item };
+    });
+
+    const linePath = points.map(p => `${p.x},${p.y}`).join(" ");
+    
+    // Area path closed to baseline
+    const areaPath = points.length > 0 
+      ? `M ${points[0].x},${chartHeight - paddingY} L ${linePath} L ${points[points.length - 1].x},${chartHeight - paddingY} Z`
+      : "";
+
+    return (
+      <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 mb-4 select-none">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-col text-left">
+            <span className="text-[9px] font-mono uppercase text-sky-400 tracking-wider font-extrabold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-pulse" />
+              Live Showroom Valuation
+            </span>
+            <span className="text-xs font-semibold text-white">Cart Index Dynamics</span>
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] font-mono text-slate-500 block uppercase font-medium">Aggregate Sum</span>
+            <span className="text-sm font-mono font-bold text-sky-400">
+              {formatCurrency(cartSubtotal)}
+            </span>
+          </div>
+        </div>
+
+        {/* Dynamic Vector Plot Grid */}
+        <div className="relative w-full h-[85px] bg-[#020204]/60 border border-white/5 rounded-xl flex flex-col justify-end p-1 overflow-hidden">
+          <svg className="w-full h-full" viewBox={`0 0 ${width} ${chartHeight}`} preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.01" />
+              </linearGradient>
+              <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+
+            {/* Grid horizontal guidelines for premium look */}
+            <line x1={0} y1={paddingY} x2={width} y2={paddingY} stroke="white" strokeOpacity="0.03" strokeWidth="1" strokeDasharray="4" />
+            <line x1={0} y1={chartHeight / 2} x2={width} y2={chartHeight / 2} stroke="white" strokeOpacity="0.03" strokeWidth="1" strokeDasharray="4" />
+            <line x1={0} y1={chartHeight - paddingY} x2={width} y2={chartHeight - paddingY} stroke="white" strokeOpacity="0.05" strokeWidth="1" />
+
+            {/* Area & Line plots connecting cart points */}
+            {points.length > 1 && (
+              <>
+                <path d={areaPath} fill="url(#areaGrad)" className="transition-all duration-300" />
+                <polyline points={linePath} fill="none" stroke="#2563eb" strokeWidth="1.5" strokeLinecap="round" className="transition-all duration-300" />
+              </>
+            )}
+
+            {/* Custom Individual Vertical Bars with glowing gradients representing each product cost */}
+            {points.map((p, idx) => {
+              const barWidth = Math.max(12, 140 / cart.length);
+              const barHeight = chartHeight - paddingY - p.y;
+              return (
+                <rect
+                  key={idx}
+                  x={p.x - barWidth / 2}
+                  y={p.y}
+                  width={barWidth}
+                  height={Math.max(barHeight, 3)}
+                  rx="3"
+                  fill="url(#barGrad)"
+                  className="transition-all duration-300 hover:fill-blue-400 cursor-pointer"
+                >
+                  <title>{`${p.item.product.name}: ${formatCurrency(p.item.product.price * p.item.quantity)} (Qty: ${p.item.quantity})`}</title>
+                </rect>
+              );
+            })}
+
+            {/* Indicator nodes running across the points */}
+            {points.map((p, idx) => (
+              <circle
+                key={idx}
+                cx={p.x}
+                cy={p.y}
+                r="3"
+                className="fill-blue-400 stroke-neutral-950 stroke-2 cursor-pointer transition-all hover:r-4"
+              >
+                <title>{`${p.item.product.name}: ${formatCurrency(p.item.product.price * p.item.quantity)}`}</title>
+              </circle>
+            ))}
+          </svg>
+
+          {/* Quick labels axis */}
+          <div className="absolute bottom-1 inset-x-0 px-4 flex justify-between pointer-events-none font-mono text-[7px] text-slate-500 uppercase">
+            <span>Entry 1</span>
+            {cart.length > 2 && <span>Value Trend Breakdown</span>}
+            <span>Index {cart.length}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const handleApplyPromo = () => {
     setPromoError("");
     const trimmed = promoCode.trim().toUpperCase();
@@ -186,6 +304,7 @@ Hello ${BUSINESS_INFO.name}! 👋 I placed an order via your online store. Pleas
               ) : !isCheckingOut ? (
                 /* Item list mode */
                 <div className="space-y-4">
+                  {renderCartChart()}
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-[10px] font-mono uppercase text-slate-500 tracking-wider">Shopping Invoice Details</span>
                     <button

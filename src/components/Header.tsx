@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, MessageSquare, Smartphone, ShoppingBag, Heart, GitCompare } from "lucide-react";
+import { Menu, X, MessageSquare, Smartphone, ShoppingBag, Heart, GitCompare, Search } from "lucide-react";
 import { BUSINESS_INFO } from "../data";
 import { useCart } from "../context/CartContext";
 import { motion, AnimatePresence } from "motion/react";
@@ -7,7 +7,16 @@ import { motion, AnimatePresence } from "motion/react";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { cartCount, setIsCartOpen, wishlist, setIsWishlistOpen, compareList, setIsCompareOpen } = useCart();
+  const { 
+    cartCount, 
+    setIsCartOpen, 
+    wishlist, 
+    setIsWishlistOpen, 
+    compareList, 
+    setIsCompareOpen,
+    isSearchOpen,
+    setIsSearchOpen
+  } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,30 +84,15 @@ export default function Header() {
 
           {/* Contact CTA & Cart */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* E-commerce Comparison Shortcut */}
+            {/* Elegant Search bar trigger */}
             <button
-              onClick={() => setIsCompareOpen(true)}
-              className={`relative p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
-                compareList.length > 0
-                  ? "border-blue-500/30 bg-blue-500/10 text-blue-400 animate-pulse"
-                  : "border-white/5 bg-white/4 text-slate-400 hover:text-white hover:bg-white/10"
-              }`}
-              title="Compare Selected Products"
-              aria-label="Toggle Tech Comparison"
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2.5 px-4 py-2 rounded-xl border border-white/5 bg-white/4 hover:bg-white/10 hover:border-white/10 text-slate-400 hover:text-white transition-all cursor-pointer font-sans text-xs group"
+              title="Search Showroom Products"
+              aria-label="Open global search"
             >
-              <GitCompare className="w-5 h-5" />
-              <AnimatePresence>
-                {compareList.length > 0 && (
-                  <motion.span
-                    initial={{ scale: 0.6, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-600 text-white rounded-full text-[10px] font-mono font-bold flex items-center justify-center shadow"
-                  >
-                    {compareList.length}
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              <Search className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+              <span className="text-slate-400 select-none">Search store...</span>
             </button>
 
             {/* E-commerce Wishlist Icon */}
@@ -156,23 +150,13 @@ export default function Header() {
 
           {/* Mobile Menu & Card Utility Buttons */}
           <div className="lg:hidden flex items-center gap-3">
-            {/* Mobile Compare Shortcut */}
+            {/* Mobile Search trigger */}
             <button
-              onClick={() => setIsCompareOpen(true)}
-              className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
-                compareList.length > 0
-                  ? "border-blue-500/20 bg-blue-500/10 text-blue-400"
-                  : "border-white/10 bg-white/5 text-slate-300"
-              }`}
-              title="Compare Selected Products"
-              aria-label="Mobile Compare Tab"
+              onClick={() => setIsSearchOpen(true)}
+              className="relative p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center"
+              aria-label="Mobile global search"
             >
-              <GitCompare className="w-4.5 h-4.5" />
-              {compareList.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 text-white rounded-full text-[9px] font-mono font-bold flex items-center justify-center">
-                  {compareList.length}
-                </span>
-              )}
+              <Search className="w-4.5 h-4.5" />
             </button>
 
             {/* Mobile Wishlist heart */}

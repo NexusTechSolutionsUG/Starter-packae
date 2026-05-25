@@ -234,24 +234,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Grid statistics display section directly below Hero */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 md:mt-24">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-white/3 border border-white/10 backdrop-blur-md rounded-[2rem] p-6 md:p-8 shadow-xl">
-          {STATS.map((stat, idx) => (
-            <div
-              key={idx}
-              className="text-center md:text-left flex flex-col justify-center items-center md:items-start p-4 border-r last:border-r-0 border-white/10"
-            >
-              <div className="text-3xl sm:text-4xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white mb-1">
-                {stat.value}
-              </div>
-              <div className="text-xs sm:text-xs text-slate-400 capitalize font-mono tracking-tight text-center md:text-left">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+
     </section>
   );
 }

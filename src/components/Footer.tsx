@@ -1,9 +1,11 @@
-import { MapPin, Phone, Mail, Globe } from "lucide-react";
+import { MapPin, Phone, Mail, Globe, Shield } from "lucide-react";
 import { BUSINESS_INFO } from "../data";
 import { MouseEvent } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { showMerchantAdmin, setShowMerchantAdmin } = useCart();
 
   const handleLinkScroll = (e: MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
@@ -115,9 +117,18 @@ export default function Footer() {
           <div>
             &copy; {currentYear} {BUSINESS_INFO.name}. All Rights Reserved.
           </div>
-          <div className="flex items-center gap-1">
-            <span>Imported & Supplied for</span>
-            <span className="text-white font-medium">Genuine Tech Access</span>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex items-center gap-1">
+              <span>Imported & Supplied for</span>
+              <span className="text-white font-medium">Genuine Tech Access</span>
+            </div>
+            <button
+              onClick={() => setShowMerchantAdmin(!showMerchantAdmin)}
+              className="text-[10px] uppercase font-mono tracking-widest text-[#25D366] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <Shield className="w-3 h-3 text-[#25D366]" />
+              <span>{showMerchantAdmin ? "[Exit Warehouse Admin]" : "[Staff Sandbox Portal]"}</span>
+            </button>
           </div>
         </div>
 
